@@ -1,6 +1,10 @@
 package com.example.android.justjava;
-
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
@@ -8,11 +12,14 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
+import java.util.jar.Attributes;
 
 /**
  * This app displays an order form to order coffee.
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
+
+    // variable quantity initilization
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,21 +30,33 @@ public class MainActivity extends ActionBarActivity {
 /**
  * Create summary
  * @param price
- * @param
+ * @param addWhippedCream w if the whipped cream is added or not
  * @return text summary
  */
-    private String createSummary(int price){
-        String priceMessage
+    private String createSummary(int price,boolean addWhippedCream){
+        String priceMessage = "Name :-- Prateesh Goswami";
+        priceMessage += " \nHas whipped cream  =" + addWhippedCream;
+        priceMessage += "\n Quantity = " + quantity + " " + " @$10/Coffee";
+               priceMessage +=  "\n Total  := " +price ;
+        priceMessage += "\n Thank You!!!";
+        return priceMessage;
+
+    }
+    public int calculatePrice(){
+        int price = 10;
+        price = price*quantity;
+        return price;
     }
     /**
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
+        int price = calculatePrice();
         CheckBox whippedCream =  (CheckBox)findViewById(R.id.checkbox_whip);
         boolean haswhipped = whippedCream.isChecked();
         Log.v("MainActivity","Has whipped cream" + haswhipped);
-        display(quantity);
-        String message = "Total :" + quantity*5;
+
+        String message =createSummary(price,haswhipped);
         displayPrice(message);
     }
 
