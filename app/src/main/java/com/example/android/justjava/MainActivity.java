@@ -33,11 +33,18 @@ public class MainActivity extends AppCompatActivity {
  * @param addWhippedCream w if the whipped cream is added or not
  * @return text summary
  */
-    private String createSummary(int price,boolean addWhippedCream){
+    private String createSummary(double price,boolean addWhippedCream,boolean haschoco){
         String priceMessage = "Name :-- Prateesh Goswami";
+        double addTax = price * 6.5/100;
         priceMessage += " \nHas whipped cream  =" + addWhippedCream;
+        priceMessage += " \nHas chocolate  =" + haschoco;
+
         priceMessage += "\n Quantity = " + quantity + " " + " @$10/Coffee";
-               priceMessage +=  "\n Total  := " +price ;
+               priceMessage +=  "\n Total  :=  $ " +price ;
+        priceMessage += "\n Tax @ 6.5%  = $ " + addTax;
+
+        price = price + addTax;
+        priceMessage += "\n Total =  $ " + price ;
         priceMessage += "\n Thank You!!!";
         return priceMessage;
 
@@ -53,10 +60,12 @@ public class MainActivity extends AppCompatActivity {
     public void submitOrder(View view) {
         int price = calculatePrice();
         CheckBox whippedCream =  (CheckBox)findViewById(R.id.checkbox_whip);
+        CheckBox chocolate = (CheckBox)findViewById(R.id.checkbox_choco);
         boolean haswhipped = whippedCream.isChecked();
-        Log.v("MainActivity","Has whipped cream" + haswhipped);
+        boolean haschoco = chocolate.isChecked();
 
-        String message =createSummary(price,haswhipped);
+
+        String message =createSummary(price,haswhipped,haschoco);
         displayPrice(message);
     }
 
