@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import java.text.NumberFormat;
@@ -29,12 +30,15 @@ public class MainActivity extends AppCompatActivity {
     int quantity = 0;
 /**
  * Create summary
+ * @param name of the customer
  * @param price
  * @param addWhippedCream w if the whipped cream is added or not
+ *  @param haschoco if it has chocolate
  * @return text summary
  */
-    private String createSummary(double price,boolean addWhippedCream,boolean haschoco){
-        String priceMessage = "Name :-- Prateesh Goswami";
+    private String createSummary(String name,double price,boolean addWhippedCream,boolean haschoco){
+
+        String priceMessage = "Name :-- " + name;
         double addTax = price * 6.5/100;
         priceMessage += " \nHas whipped cream  =" + addWhippedCream;
         priceMessage += " \nHas chocolate  =" + haschoco;
@@ -58,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
+        EditText text = (EditText)findViewById(R.id.editText);
+        String name = text.getText().toString();
         int price = calculatePrice();
         CheckBox whippedCream =  (CheckBox)findViewById(R.id.checkbox_whip);
         CheckBox chocolate = (CheckBox)findViewById(R.id.checkbox_choco);
@@ -65,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         boolean haschoco = chocolate.isChecked();
 
 
-        String message =createSummary(price,haswhipped,haschoco);
+        String message =createSummary(name,price,haswhipped,haschoco);
         displayPrice(message);
     }
 
