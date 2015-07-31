@@ -1,4 +1,5 @@
 package com.example.android.justjava;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,51 +28,66 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
+
     int quantity = 0;
-/**
- * Create summary
- * @param name of the customer
- * @param price
- * @param addWhippedCream w if the whipped cream is added or not
- *  @param haschoco if it has chocolate
- * @return text summary
- */
-    private String createSummary(String name,double price,boolean addWhippedCream,boolean haschoco){
+
+    /**
+     * Create summary
+     *
+     * @param name            of the customer
+     * @param price
+     * @param addWhippedCream w if the whipped cream is added or not
+     * @param haschoco        if it has chocolate
+     * @return text summary
+     */
+    private String createSummary(String name, double price, boolean addWhippedCream, boolean haschoco) {
 
         String priceMessage = "Name :-- " + name;
-        double addTax = price * 6.5/100;
         priceMessage += " \nHas whipped cream  =" + addWhippedCream;
         priceMessage += " \nHas chocolate  =" + haschoco;
-
-        priceMessage += "\n Quantity = " + quantity + " " + " @$10/Coffee";
-               priceMessage +=  "\n Total  :=  $ " +price ;
-        priceMessage += "\n Tax @ 6.5%  = $ " + addTax;
-
-        price = price + addTax;
-        priceMessage += "\n Total =  $ " + price ;
+        priceMessage += "\n Quantity = " + quantity;
+        priceMessage += "\n After adding tax @6.5% ";
+        priceMessage += "\n Total =  $ " + price;
         priceMessage += "\n Thank You!!!";
         return priceMessage;
 
     }
-    public int calculatePrice(){
-        int price = 10;
-        price = price*quantity;
-        return price;
+
+    /**
+     * Calculate price
+     *
+     * @param haswhipped w if the whipped cream is added or not
+     * @param haschoco   if it has chocolate
+     * @return price
+     */
+    public double calculatePrice(boolean haswhipped, boolean haschoco) {
+
+        double basePrice = 5;
+        if (haswhipped) {
+            basePrice = basePrice + 1;
+        }
+        if (haschoco) {
+            basePrice = basePrice + 2;
+        }
+        basePrice = basePrice * quantity;
+        double tax = .065;
+       double total = basePrice + (basePrice * tax);
+        return total;
+
     }
+
     /**
      * This method is called when the order button is clicked.
      */
     public void submitOrder(View view) {
-        EditText text = (EditText)findViewById(R.id.editText);
+        EditText text = (EditText) findViewById(R.id.editText);
         String name = text.getText().toString();
-        int price = calculatePrice();
-        CheckBox whippedCream =  (CheckBox)findViewById(R.id.checkbox_whip);
-        CheckBox chocolate = (CheckBox)findViewById(R.id.checkbox_choco);
+        CheckBox whippedCream = (CheckBox) findViewById(R.id.checkbox_whip);
+        CheckBox chocolate = (CheckBox) findViewById(R.id.checkbox_choco);
         boolean haswhipped = whippedCream.isChecked();
         boolean haschoco = chocolate.isChecked();
-
-
-        String message =createSummary(name,price,haswhipped,haschoco);
+        double price = calculatePrice(haswhipped, haschoco);
+        String message = createSummary(name, price, haswhipped, haschoco);
         displayPrice(message);
     }
 
@@ -79,13 +95,20 @@ public class MainActivity extends AppCompatActivity {
      * This method is called when the + button is clicked.
      */
     public void increment(View view) {
-        quantity =quantity + 1;
+        if (quantity >= 99 ){
+            quantity =99;
+        }
+        quantity = quantity + 1;
         display(quantity);
     }
+
     /**
      * This method is called when the - button is clicked.
      */
     public void decrement(View view) {
+        if(quantity <= 0){
+            quantity = 1;
+        }
         quantity = quantity - 1;
         display(quantity);
     }
@@ -99,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.quantity_text_view);
         quantityTextView.setText("" + number);
     }
+
     /**
      * This method displays the given price on the screen.
      */
