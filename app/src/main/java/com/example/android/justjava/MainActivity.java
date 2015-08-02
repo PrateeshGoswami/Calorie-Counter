@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.NumberFormat;
 import java.util.jar.Attributes;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    int quantity = 0;
+    int quantity = 1;
 
     /**
      * Create summary
@@ -90,29 +91,33 @@ public class MainActivity extends AppCompatActivity {
         String message = createSummary(name, price, haswhipped, haschoco);
         displayPrice(message);
     }
-
     /**
-     * This method is called when the + button is clicked.
+     * This method is called when the plus button is clicked.
      */
     public void increment(View view) {
-        if (quantity >= 99 ){
-            quantity =99;
+        if (quantity == 100) {
+            // Show an error message as a toast
+            Toast.makeText(this, "You cannot have more than 100 coffees", Toast.LENGTH_SHORT).show();
+            // Exit this method early because there's nothing left to do
+            return;
         }
         quantity = quantity + 1;
         display(quantity);
     }
 
     /**
-     * This method is called when the - button is clicked.
+     * This method is called when the minus button is clicked.
      */
     public void decrement(View view) {
-        if(quantity <= 0){
-            quantity = 1;
+        if (quantity == 1) {
+            // Show an error message as a toast
+            Toast.makeText(this, "You cannot have less than 1 coffee", Toast.LENGTH_SHORT).show();
+            // Exit this method early because there's nothing left to do
+            return;
         }
         quantity = quantity - 1;
         display(quantity);
     }
-
 
     /**
      * This method displays the given quantity value on the screen.
