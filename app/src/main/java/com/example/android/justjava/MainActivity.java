@@ -17,7 +17,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().setTitle("Calorie Counter");
     }
+
 
     int calorie = 0;
     int number;
@@ -43,20 +45,17 @@ public class MainActivity extends AppCompatActivity {
         }
         calorie = calorie + 10;
         display(calculateCalorie(calorie));
+        displayCalorie(calorie);
     }
 
     /**
      * This method is called when the minus button is clicked.
      */
     public void decrement(View view) {
-        if (calorie == 1) {
-            // Show an error message as a toast
-            Toast.makeText(this, "You cannot have less than 1 coffee", Toast.LENGTH_SHORT).show();
-            // Exit this method early because there's nothing left to do
-            return;
-        }
+
         calorie = calorie - 10;
         display(calculateCalorie(calorie));
+        displayCalorie(calorie);
     }
 
     /**
@@ -66,6 +65,10 @@ public class MainActivity extends AppCompatActivity {
         TextView quantityTextView = (TextView) findViewById(
                 R.id.quantity_text_view);
         quantityTextView.setText("" + number);
+    }
+    private void displayCalorie(int number){
+        TextView calorieText = (TextView) findViewById(R.id.calorie);
+        calorieText.setText("" + number);
     }
 
 
