@@ -1,4 +1,5 @@
 # JustJava
+src="https://cloud.githubusercontent.com/assets/13324542/17468346/fe92b048-5cdb-11e6-9e58-57d997e36e12.png" width="180">
 
 This application 
 1.increases  calories by pressing + 
