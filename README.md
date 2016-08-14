@@ -3,5 +3,6 @@
 
 This application 
 1.increases  calories by pressing + 
-2.calculates how much is left from a daily intake target
+2.decreases calorie by pressing -
+3.calculates how much is left from a daily intake target
 .
